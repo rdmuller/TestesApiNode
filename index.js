@@ -3,9 +3,17 @@ const app = express();
 
 app.listen('3000')
 app.use(express.json()); // precisa para tratar o JSon de retorno nos métodos
-
+/*
+app.route('/:nome').get((req, res) => {
+    res.send(`olá ${req.params.nome}`);
+});
+*/
 app.route('/').get((req, res) => {
-    res.send('olá');
+    res.send('olá.');
+});
+
+app.route('/QueryParm').get((req, res) => {
+    res.send(req.query);
 });
 
 app.route('/').post((req,res) => {
@@ -15,6 +23,8 @@ app.route('/').post((req,res) => {
     console.log(req.baseUrl)
     console.log('headers -------------------------');
     console.log(req.headers)
+    console.log('headers -------------------------');
+    console.log(req.query)
     res.body = 'teste ronald';
 });
 
