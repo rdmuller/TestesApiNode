@@ -1,8 +1,11 @@
-const express = require('express');
-const app = express();
+const express = require('express')
+const app = express()
+const axios = require('axios')
 
 app.listen('3000')
 app.use(express.json()); // precisa para tratar o JSon de retorno nos métodos
+app.set("view engine", "ejs");
+
 /*
 app.route('/:nome').get((req, res) => {
     res.send(`olá ${req.params.nome}`);
@@ -39,4 +42,26 @@ app.route('/about').post((req,res) => {
     retorno = retorno + `\n\nBASE URL => ${req.baseUrl}`
     
     return res.send(retorno);
+})
+
+// buscar dados do usuário do github
+app.get('/git', (req,res) => {
+    axios.get('http://api.github.com/users/rdmuller')
+        .then(result => console.log(result.data))
+        .catch(error => console.log('Erro'))
+
+    axios.get('http://api.github.com/users/rdmuller')
+        .then(
+            result => res.render('gitdata/index', {
+                gitData: result.data,
+            })
+        )
+        .catch(error => res.render('gitdata/index', {
+            gitData: error,
+        })
+        )
+})
+
+app.route('/testeFetch').get((req,res) => {
+    res.render('fetch/testeApiFetch')
 })
