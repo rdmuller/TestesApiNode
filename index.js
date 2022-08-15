@@ -1,6 +1,8 @@
-const express = require('express')
-const app = express()
-const axios = require('axios')
+const express = require('express');
+const app = express();
+const axios = require('axios');
+const { response } = require('express');
+//const apis = require('./views/fetch/fetch')
 
 app.listen('3000')
 app.use(express.json()); // precisa para tratar o JSon de retorno nos métodos
@@ -11,6 +13,10 @@ app.route('/:nome').get((req, res) => {
     res.send(`olá ${req.params.nome}`);
 });
 */
+
+const url = 'http://api.github.com/users'
+const urlComParm = `${url}\/rdmuller`
+
 app.route('/').get((req, res) => {
     res.send('olá.');
 });
@@ -46,15 +52,14 @@ app.route('/about').post((req,res) => {
 
 // buscar dados do usuário do github
 app.get('/git', (req,res) => {
-    axios.get('http://api.github.com/users/rdmuller')
-        .then(result => console.log(result.data))
-        .catch(error => console.log('Erro'))
-
-    axios.get('http://api.github.com/users/rdmuller')
+    axios.get(urlComParm)
         .then(
-            result => res.render('gitdata/index', {
-                gitData: result.data,
-            })
+            (result) => {
+                console.log(result.data)
+                res.render('gitdata/index', {
+                    gitData: result.data,
+                })
+            }
         )
         .catch(error => res.render('gitdata/index', {
             gitData: error,
@@ -62,6 +67,24 @@ app.get('/git', (req,res) => {
         )
 })
 
-app.route('/testeFetch').get((req,res) => {
-    res.render('fetch/testeApiFetch')
+//----------------------------------------------------------------------------//
+
+const urlDiscover = 'http://localhost:5500/api'
+
+function getUsers() {
+    axios.get('http://localhost:5500/api')
+    .then(response => {
+        console.log(response.data)
+        return JSON.stringify(response.data)
+    })
+    .catch(error => {
+        console.log("Erro executando a função")
+        console.error(error)
+    })
+}
+
+app.get('/discover', (req, res) => {
+    result = getUsers()
+    res.render('discover/index', {result: result, })
 })
+
