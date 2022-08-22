@@ -6,6 +6,26 @@
 </head>
 <body>
     <h1>Testes com Axios</h1>
-    <%= result %>
+    <span><%= result %></span>
+    <form action="">
+        <!-- <button onclick="< userScripts.clicou1(); >">Adicionar novo usuário</button>
+        <button onclick="< userScripts.clicou2(); >">Adicionar novo usuário 2</button>-->
+    </form>
+    <table>
+        <thead>
+            <th>Id</th>
+            <th>Name</th>    
+            <th>City</th>
+        </thead>
+        <tbody>
+            <% for (let i = 0; i < users.length; i++) { %>
+                <tr>
+                    <td><%= users[i].id %></td>
+                    <td><%= users[i].name %></td>
+                    <td><%= users[i].city %></td>
+                </tr>
+            <% } %>
+        </tbody>
+    </table>
 </body>
 </html>

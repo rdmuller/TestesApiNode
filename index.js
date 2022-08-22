@@ -54,7 +54,7 @@ app.route('/about').post((req,res) => {
 app.get('/git', (req,res) => {
     axios.get(urlComParm)
         .then(
-            (result) => {
+            result => {
                 console.log(result.data)
                 res.render('gitdata/index', {
                     gitData: result.data,
@@ -69,22 +69,8 @@ app.get('/git', (req,res) => {
 
 //----------------------------------------------------------------------------//
 
-const urlDiscover = 'http://localhost:5500/api'
-
-function getUsers() {
-    axios.get('http://localhost:5500/api')
-    .then(response => {
-        console.log(response.data)
-        return JSON.stringify(response.data)
-    })
-    .catch(error => {
-        console.log("Erro executando a função")
-        console.error(error)
-    })
-}
-
 app.get('/discover', (req, res) => {
-    result = getUsers()
-    res.render('discover/index', {result: result, })
+    const userScripts = require('./views/discover/usuarios.js')
+    userScripts.renderView(res)
 })
 
